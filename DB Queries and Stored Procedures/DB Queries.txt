@@ -19,4 +19,120 @@ CREATE TABLE [dbo].[Employee](
 )
 GO
 
+--Create Stored Procedures to CRUD operations
+
+--Read All Employees
+CREATE PROC [DBO].[sp_Get_Employees]
+AS
+BEGIN
+	SELECT Id,FirstName,LastName,DateofBirth,Email,Salary FROM DBO.Employee WITH(NOLOCK)
+END
+
+--getById
+CREATE PROC [DBO].[sp_Get_EmployeeId]
+(
+	@Id INT
+)
+AS
+BEGIN
+	SELECT Id,FirstName,LastName,DateofBirth,Email,Salary FROM DBO.Employee WITH(NOLOCK)
+	WHERE Id = @Id 
+END
+
+--Insert
+ALTER PROC [DBO].[sp_Insert_Employee]
+(
+	@FirstName VARCHAR(50),
+	@LastName VARCHAR(50),
+	@DateofBirth DATE,
+	@Email VARCHAR(50),
+	@Salary FLOAT
+)
+AS
+BEGIN
+
+BEGIN TRY
+BEGIN TRAN
+	INSERT INTO DBO.Employee(FirstName,LastName,DateofBirth,Email,Salary)
+	VALUES 
+	(
+		@FirstName,
+		@LastName,
+		@DateofBirth,
+		@Email,
+		@Salary
+	)
+COMMIT TRAN 
+END TRY
+BEGIN CATCH
+	ROLLBACK TRAN
+END CATCH
+END
+
+--Update
+CREATE PROC [DBO].[sp_Update_Employee]
+(
+	@Id INT,
+	@FirstName VARCHAR(50),
+	@LastName VARCHAR(50),
+	@DateofBirth DATE,
+	@Email VARCHAR(50),
+	@Salary FLOAT
+)
+AS
+BEGIN
+	--Check whether that Id valid or not
+	DECLARE @RowCount INT = 0
+-- check the any error in query (Error Handling-try catch)
+	BEGIN TRY
+		--Check whether data is available with that Id or not (Return 1 -> Data availble, Return 0 --> Data not available)
+		SET @RowCount = (SELECT COUNT(1) FROM DBO.Employee WITH(NOLOCK) WHERE Id = @Id)
+	
+		IF(@RowCount > 1)
+			BEGIN
+				BEGIN TRAN
+					UPDATE DBO.Employee
+						SET
+							FirstName = @FirstName,
+							LastName  = @LastName,
+							DateofBirth = @DateofBirth,
+							Email = @Email, 
+							Salary  = @Salary 
+						WHERE Id = @Id
+				COMMIT TRAN
+			END
+	
+	END TRY
+BEGIN CATCH
+	ROLLBACK TRAN
+END CATCH
+END
+
+--Delete
+CREATE PROC [DBO].[sp_Delete_Employee]
+(
+	@Id INT
+)
+AS
+BEGIN
+	--Check whether that Id valid or not
+	DECLARE @RowCount INT = 0
+-- check the any error in query (Error Handling-try catch)
+	BEGIN TRY
+		--Check whether data is available with that Id or not (Return 1 -> Data availble, Return 0 --> Data not available)
+		SET @RowCount = (SELECT COUNT(1) FROM DBO.Employee WITH(NOLOCK) WHERE Id = @Id)
+	
+		IF(@RowCount > 1)
+			BEGIN
+				BEGIN TRAN
+					DELETE FROM DBO.Employee
+						WHERE Id = @Id
+				COMMIT TRAN
+			END
+	
+	END TRY
+BEGIN CATCH
+	ROLLBACK TRAN
+END CATCH
+END
 
