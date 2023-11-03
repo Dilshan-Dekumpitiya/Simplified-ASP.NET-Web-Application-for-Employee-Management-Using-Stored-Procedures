@@ -40,22 +40,79 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public IActionResult Create(Employee model)
         {
-            if(!ModelState.IsValid)
+            try
             {
-                TempData["errorMessage"] = "Model data is invalid";
-            }
-            bool result = _dal.Insert(model);
+                if (!ModelState.IsValid)
+                {
+                    TempData["errorMessage"] = "Model data is invalid";
+                }
+                bool result = _dal.Insert(model);
 
-            if(!result)
+                if (!result)
+                {
+                    TempData["errorMessage"] = "Unable to save the data";
+                    return View();
+                }
+
+                TempData["successMessage"] = "Employee details saved";
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
             {
-                TempData["errorMessage"] = "Unable to save the data";
+                TempData["errorMessage"] = ex.Message;
                 return View();
             }
 
-            TempData["successMessage"] = "Employee details saved";
+        }
 
-            return RedirectToAction("Index");
+        //Search method (get by id)
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            try
+            {
+                Employee employee = _dal.GetById(id);
+                if (employee.Id == 0)
+                {
+                    TempData["errorMessage"] = $"Employee details not found with Id : {id}";
+                    return RedirectToAction("Index");
+                }
+                return View(employee);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+            }
+        }
 
+        //edit it (save it --> search id got employee)
+        [HttpPost]
+        public IActionResult Edit(Employee model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    TempData["errorMessage"] = "Model data is invalid";
+                    return View();
+                }
+                bool result = _dal.Update(model);
+
+                if (!result)
+                {
+                    TempData["errorMessage"] = "Unable to update the data";
+                    return View();
+                }
+                    TempData["successMessage"] = "Employee details updated";
+                    return RedirectToAction("Index");
+                }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+            }
         }
     }
 }

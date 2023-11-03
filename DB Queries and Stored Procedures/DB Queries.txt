@@ -88,7 +88,7 @@ BEGIN
 		--Check whether data is available with that Id or not (Return 1 -> Data availble, Return 0 --> Data not available)
 		SET @RowCount = (SELECT COUNT(1) FROM DBO.Employee WITH(NOLOCK) WHERE Id = @Id)
 	
-		IF(@RowCount > 1)
+		IF(@RowCount > 0)
 			BEGIN
 				BEGIN TRAN
 					UPDATE DBO.Employee
@@ -122,7 +122,7 @@ BEGIN
 		--Check whether data is available with that Id or not (Return 1 -> Data availble, Return 0 --> Data not available)
 		SET @RowCount = (SELECT COUNT(1) FROM DBO.Employee WITH(NOLOCK) WHERE Id = @Id)
 	
-		IF(@RowCount > 1)
+		IF(@RowCount > 0)
 			BEGIN
 				BEGIN TRAN
 					DELETE FROM DBO.Employee
