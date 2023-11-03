@@ -115,6 +115,21 @@ namespace EmployeeManagement.DAL_Data_Access_Layer_
             return id > 0 ? true : false;
         }
 
+        public bool Delete(int id)
+        {
+            int deletedRowCount = 0;
+            using (_connection = new SqlConnection(GetConnectionString()))
+            {
+                _command = _connection.CreateCommand();
+                _command.CommandType = CommandType.StoredProcedure;
+                _command.CommandText = "[DBO].[sp_Delete_Employee]";
+                _command.Parameters.AddWithValue("@Id",id);
+                _connection.Open();
+                deletedRowCount = _command.ExecuteNonQuery();
+                _connection.Close();
+            }
+            return deletedRowCount > 0 ? true : false;
+        }
 
     }
 }

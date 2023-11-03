@@ -114,5 +114,54 @@ namespace EmployeeManagement.Controllers
                 return View();
             }
         }
+
+        //Search method (get by id)
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                Employee employee = _dal.GetById(id);
+                if (employee.Id == 0)
+                {
+                    TempData["errorMessage"] = $"Employee details not found with Id : {id}";
+                    return RedirectToAction("Index");
+                }
+                return View(employee);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+            }
+        }
+
+        //edit it (delete it --> search id got employee)
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(Employee model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    TempData["errorMessage"] = "Model data is invalid";
+                    return View();
+                }
+                bool result = _dal.Delete(model.Id);
+
+                if (!result)
+                {
+                    TempData["errorMessage"] = "Unable to delete the data";
+                    return View();
+                }
+                TempData["successMessage"] = "Employee details deleted";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return View();
+            }
+        }
     }
 }
