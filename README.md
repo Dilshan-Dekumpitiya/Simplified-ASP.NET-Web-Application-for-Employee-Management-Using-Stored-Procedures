@@ -1,4 +1,4 @@
-# Simplified-ASP.NET-Web-Application-for-Employee-Management
+# Simplified-ASP.NET-Web-Application-for-Employee-Management-Using-Stored-Procedures
 This project was created to practise CRUD Operations for ASP.NET,SQL using Stored Procedures  (ASP.NET Core Web App - Model View Controller)
 
 ## Steps
