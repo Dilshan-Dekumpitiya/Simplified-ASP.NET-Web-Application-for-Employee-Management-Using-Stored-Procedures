@@ -1,7 +1,10 @@
+using EmployeeManagement.DAL_Data_Access_Layer_;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<Employee_DAL, Employee_DAL>();
 
 var app = builder.Build();
 
