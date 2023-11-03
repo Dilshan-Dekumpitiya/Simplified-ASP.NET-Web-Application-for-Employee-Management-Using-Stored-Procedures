@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.DAL_Data_Access_Layer_;
 using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace EmployeeManagement.Controllers
 {
@@ -28,6 +29,12 @@ namespace EmployeeManagement.Controllers
             }
 
             return View(employees);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }
