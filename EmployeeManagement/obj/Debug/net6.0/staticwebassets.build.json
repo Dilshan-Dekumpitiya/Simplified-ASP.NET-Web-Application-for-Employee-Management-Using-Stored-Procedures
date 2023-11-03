@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XMar/tXjpxcbLICqFvGP/tBRwfaoujDnlHaujLoBWlo=",
+  "Hash": "twiq0GowpeTkN3yrRvYtv+OgJ5pwk3qdeHNfPpRIWdQ=",
   "Source": "EmployeeManagement",
   "BasePath": "_content/EmployeeManagement",
   "Mode": "Default",
@@ -831,6 +831,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\My Practise\\EmployeeManagement\\EmployeeManagement\\wwwroot\\js\\CustomJS.js",
+      "SourceId": "EmployeeManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\My Practise\\EmployeeManagement\\EmployeeManagement\\wwwroot\\",
+      "BasePath": "_content/EmployeeManagement",
+      "RelativePath": "js/CustomJS.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\CustomJS.js"
     },
     {
       "Identity": "D:\\My Practise\\EmployeeManagement\\EmployeeManagement\\wwwroot\\js\\site.js",
