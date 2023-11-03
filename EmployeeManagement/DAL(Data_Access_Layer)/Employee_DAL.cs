@@ -47,5 +47,25 @@ namespace EmployeeManagement.DAL_Data_Access_Layer_
             }
             return employeeList;
         }
+
+        public bool Insert(Employee model)
+        {
+            int id = 0;
+            using (_connection = new SqlConnection(GetConnectionString()))
+            {
+                _command = _connection.CreateCommand();
+                _command.CommandType= CommandType.StoredProcedure;
+                _command.CommandText = "[DBO].[sp_Insert_Employee]";
+                _command.Parameters.AddWithValue("@FirstName",model.FirstName);
+                _command.Parameters.AddWithValue("@LastName",model.LastName);
+                _command.Parameters.AddWithValue("@DateOfBirth", model.DateOfBirth);
+                _command.Parameters.AddWithValue("@Email",model.Email);
+                _command.Parameters.AddWithValue("@Salary",model.Salary);
+                _connection.Open();
+                id = _command.ExecuteNonQuery();
+                _connection.Close();
+            }
+            return id > 0 ? true : false;
+        }
     }
 }

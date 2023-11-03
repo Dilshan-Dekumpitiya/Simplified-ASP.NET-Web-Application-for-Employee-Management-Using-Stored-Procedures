@@ -36,5 +36,26 @@ namespace EmployeeManagement.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Create(Employee model)
+        {
+            if(!ModelState.IsValid)
+            {
+                TempData["errorMessage"] = "Model data is invalid";
+            }
+            bool result = _dal.Insert(model);
+
+            if(!result)
+            {
+                TempData["errorMessage"] = "Unable to save the data";
+                return View();
+            }
+
+            TempData["successMessage"] = "Employee details saved";
+
+            return RedirectToAction("Index");
+
+        }
     }
 }
