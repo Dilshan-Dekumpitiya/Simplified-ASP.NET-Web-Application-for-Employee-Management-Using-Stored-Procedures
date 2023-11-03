@@ -28,7 +28,7 @@ namespace EmployeeManagement.DAL_Data_Access_Layer_
             {
                 _command = _connection.CreateCommand();
                 _command.CommandType = CommandType.StoredProcedure;
-                _command.CommandText = "[dbo].[sp_Get_Employees]";
+                _command.CommandText = "[dbo].[sp_Get_Employees]"; //pass the sp
                 _connection.Open();
                 SqlDataReader dr = _command.ExecuteReader();
 
